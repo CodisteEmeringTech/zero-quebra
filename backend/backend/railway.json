@@ -1,0 +1,13 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "_comment": "Survives subtree-split: when 'main:backend/' is split onto the 'backend' branch, this file lands at 'backend/railway.json' on that branch — the path Railway's service is configured to read from (config-as-code path = 'backend/railway.json'). The mirror at the branch root (railway.json) is also valid; either path works.",
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "npm run build"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}
