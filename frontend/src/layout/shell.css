@@ -1,0 +1,62 @@
+.shell {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  background: var(--bg);
+}
+.sidebar {
+  background: var(--brand-black);
+  color: var(--brand-offwhite);
+  padding: 24px 16px;
+  display: flex; flex-direction: column;
+}
+.sb-brand {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 600; font-size: 16px;
+  margin-bottom: 24px;
+}
+.sb-mark { color: var(--brand-green); font-size: 14px; }
+.sb-group {
+  display: block;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); font-weight: 600;
+  padding: 16px 12px 6px;
+}
+.sb-link {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.sb-link:hover { background: rgba(255,255,255,0.06); color: var(--brand-offwhite); }
+.sb-link.on   { background: rgba(202,211,172,0.15); color: var(--brand-green); }
+
+.sb-spacer { flex: 1; }
+.sb-lang {
+  padding: 0 0 12px;
+  display: flex;
+  justify-content: flex-start;
+}
+.sb-user {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 16px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.sb-user strong { font-size: 13px; font-weight: 600; }
+.sb-user span { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; text-transform: uppercase; }
+.sb-user button {
+  margin-top: 12px;
+  background: rgba(255,255,255,0.06);
+  color: var(--brand-offwhite);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.sb-user button:hover { background: rgba(255,255,255,0.12); }
+
+.content {
+  overflow: auto;
+}

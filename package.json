@@ -1,0 +1,27 @@
+{
+  "name": "zero-quebra-monorepo",
+  "version": "0.2.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:reset": "docker compose down -v && docker compose up -d postgres",
+    "db:migrate": "npm -w backend run prisma:migrate",
+    "db:seed": "npm -w backend run db:seed",
+    "dev": "concurrently -k -n backend,frontend -c magenta,cyan \"npm -w backend run dev\" \"npm -w frontend run dev\"",
+    "build": "npm -w backend run build && npm -w frontend run build",
+    "start": "npm -w backend run start",
+    "test": "npm -w backend run test && npm -w frontend run test",
+    "setup": "npm install && npm run db:up && sleep 4 && npm run db:migrate && npm run db:seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

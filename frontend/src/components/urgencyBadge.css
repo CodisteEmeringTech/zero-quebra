@@ -1,0 +1,13 @@
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge-SAFE         { background: #E6EFD9; color: #4F7A35; }
+.badge-AMBER        { background: #F8E2B6; color: #87580B; }
+.badge-CRITICAL     { background: #F2C9BD; color: #80281B; }
+.badge-ACTION_TAKEN { background: #CCDADD; color: #2D4F56; text-transform: none; letter-spacing: 0; font-weight: 500; }

@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  COO
+  STORE_MANAGER
+  SUPERVISOR
+}
+
+enum UrgencyTier {
+  SAFE
+  AMBER
+  CRITICAL
+}
+
+enum AlertStatus {
+  PENDING
+  CONFIRMED
+  DISMISSED
+}
+
+enum ActionType {
+  MARKDOWN
+  PROMOTE
+  REMOVE
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role
+  storeId      String?
+  store        Store?   @relation(fields: [storeId], references: [id])
+  createdAt    DateTime @default(now())
+
+  confirmedActions ActionLog[]
+}
+
+model Store {
+  id                String   @id @default(cuid())
+  storeCode         String   @unique
+  name              String
+  city              String
+  shrinkagePct30d   Float    @default(0)
+  activeInDemo      Boolean  @default(false)
+  createdAt         DateTime @default(now())
+
+  users        User[]
+  inventories  Inventory[]
+  cooMetrics   CooDailyMetric[]
+  actions      ActionLog[]
+}
+
+model Supplier {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  contactEmail String?
+  phone        String?
+  createdAt    DateTime @default(now())
+
+  skus Sku[]
+}
+
+model Sku {
+  id              String   @id @default(cuid())
+  skuCode         String   @unique
+  productNamePt   String
+  section         String   @default("FLV")
+  baseCostBrl     Float
+  baseSaleBrl     Float
+  marginFloorBrl  Float
+  supplierId      String?
+  supplier        Supplier? @relation(fields: [supplierId], references: [id])
+  createdAt       DateTime @default(now())
+
+  inventories Inventory[]
+}
+
+model Inventory {
+  id                  String   @id @default(cuid())
+  skuId               String
+  sku                 Sku      @relation(fields: [skuId], references: [id], onDelete: Cascade)
+  storeId             String
+  store               Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  shelf               String
+  unitsInStock        Int
+  hoursToExpiry       Int
+  unitsSoldToday      Int      @default(0)
+  velocityPerHour     Float    @default(0)
+  dayOfWeekIndex      Float    @default(1)
+  weatherSensitivity  Float    @default(0)
+  urgencyTier         UrgencyTier @default(SAFE)
+  isHeadline          Boolean  @default(false)
+  updatedAt           DateTime @updatedAt
+  createdAt           DateTime @default(now())
+
+  alerts Alert[]
+  @@unique([skuId, storeId])
+}
+
+model Alert {
+  id                  String   @id @default(cuid())
+  inventoryId         String
+  inventory           Inventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  urgency             UrgencyTier
+  recommendation      ActionType
+  discountPct         Int
+  reasonPt            String
+  unitsAtRisk         Int      @default(0)
+  hoursToExpiry       Int      @default(0)
+  urgencyWindowHours  Int      @default(2)
+  estSavingsBrl       Float    @default(0)
+  estMarginProtBrl    Float    @default(0)
+  confidencePct       Int      @default(0)
+  status              AlertStatus @default(PENDING)
+  createdAt           DateTime @default(now())
+  resolvedAt          DateTime?
+
+  actionLog ActionLog?
+}
+
+model ActionLog {
+  id                  String   @id @default(cuid())
+  alertId             String   @unique
+  alert               Alert    @relation(fields: [alertId], references: [id], onDelete: Cascade)
+  storeId             String
+  store               Store    @relation(fields: [storeId], references: [id])
+  recommendation      ActionType
+  discountPct         Int
+  unitsAtRisk         Int      @default(0)
+  estSavingsBrl       Float    @default(0)
+  estMarginProtBrl    Float    @default(0)
+  confirmedById       String
+  confirmedBy         User     @relation(fields: [confirmedById], references: [id])
+  confirmedAt         DateTime @default(now())
+  outcome             String?
+}
+
+model CooDailyMetric {
+  id                String   @id @default(cuid())
+  storeId           String?
+  store             Store?   @relation(fields: [storeId], references: [id])
+  date              DateTime
+  shrinkagePct      Float
+  savingsBrl        Float
+  actionsConfirmed  Int
+
+  @@unique([storeId, date])
+  @@index([date])
+}
+
+model LearningWeek {
+  id          String   @id @default(cuid())
+  week        Int      @unique
+  accuracyPct Float
+}
