@@ -20,6 +20,7 @@ import { setupWebSocket } from './ws.js';
 import { startScanner } from './scanner.js';
 
 const PORT = Number(process.env.PORT) || 4321;
+const HOST = process.env.HOST || '0.0.0.0';
 
 const app = express();
 app.use(cors());
@@ -45,10 +46,19 @@ const server = http.createServer(app);
 const wss = new WebSocketServer({ server, path: '/ws' });
 setupWebSocket(wss);
 
-server.listen(PORT, () => {
-  console.log(`[zero-quebra] api+ws on http://localhost:${PORT}`);
+server.listen(PORT, HOST, () => {
+  console.log(`[zero-quebra] api+ws listening on http://${HOST}:${PORT}`);
+  console.log(`[zero-quebra] node ${process.version} · env ${process.env.NODE_ENV || 'development'}`);
   startScanner();
 });
+
+server.on('error', (err) => {
+  console.error('[zero-quebra] server error:', err);
+  process.exit(1);
+});
+
+process.on('uncaughtException',  (err)    => { console.error('[uncaughtException]', err); process.exit(1); });
+process.on('unhandledRejection', (reason) => { console.error('[unhandledRejection]', reason); });
 
 process.on('SIGTERM', async () => { await prisma.$disconnect(); process.exit(0); });
 process.on('SIGINT',  async () => { await prisma.$disconnect(); process.exit(0); });
