@@ -1,0 +1,65 @@
+.calc-current {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-bottom: 4px;
+}
+.calc-current-block {
+  background: var(--card);
+  padding: 18px 22px;
+  border-radius: var(--radius-lg);
+  display: flex; flex-direction: column; gap: 4px;
+  box-shadow: var(--shadow);
+}
+.calc-current-block span {
+  font-size: 11px; color: var(--muted); letter-spacing: 0.06em;
+  text-transform: uppercase; font-weight: 600;
+}
+.calc-current-block strong {
+  font-size: 28px; font-weight: 600; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.calc-card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 18px;
+  box-shadow: var(--shadow);
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+.calc-card:hover { transform: translateY(-1px); }
+.calc-card.on {
+  border-color: var(--brand-green);
+  transform: translateY(-2px);
+}
+.calc-card-tag {
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600;
+}
+.calc-card h2 { margin: 4px 0 0; font-size: 18px; font-weight: 600; }
+
+.calc-card dl { margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.calc-card dl > div {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 1px solid var(--hairline); padding-bottom: 10px;
+}
+.calc-card dt { color: var(--muted); font-size: 13px; }
+.calc-card dd {
+  margin: 0; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-size: 16px; letter-spacing: -0.01em;
+}
+.calc-rel { color: var(--muted); font-weight: 400; font-size: 13px; }
+
+.calc-select {
+  margin-top: auto;
+  background: var(--brand-black);
+  color: var(--brand-offwhite);
+  padding: 12px 14px; border-radius: 8px;
+  font-size: 13px; font-weight: 600;
+}
+.calc-card.on .calc-select { background: var(--brand-green); color: var(--brand-black); }

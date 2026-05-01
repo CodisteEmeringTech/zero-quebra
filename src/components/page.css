@@ -1,0 +1,146 @@
+.page {
+  padding: 24px 32px 40px;
+  display: flex; flex-direction: column; gap: 20px;
+  min-height: 100%;
+}
+.page-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 16px;
+}
+.page-header h1 {
+  margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em;
+}
+.page-header p {
+  margin: 4px 0 0; color: var(--muted); font-size: 13px;
+}
+.page-header-right { display: flex; gap: 8px; align-items: center; }
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px; font-weight: 600;
+  background: var(--brand-black);
+  color: var(--brand-offwhite);
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-ghost {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--hairline);
+}
+.btn-ghost:hover { background: var(--card); }
+.btn-danger {
+  background: var(--critical); color: white;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 0;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card-pad { padding: 20px 24px; }
+
+.data-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+.data-table thead th {
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--bg);
+  font-weight: 500; color: var(--muted);
+  border-bottom: 1px solid var(--hairline);
+}
+.data-table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: middle;
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background: var(--bg); }
+.data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.toolbar {
+  display: flex; gap: 12px; align-items: center;
+}
+.toolbar input, .toolbar select {
+  padding: 8px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  font: inherit;
+  background: white;
+}
+.toolbar input:focus, .toolbar select:focus { outline: 2px solid var(--brand-green); border-color: var(--brand-green); }
+
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(27,29,30,0.55);
+  display: grid; place-items: center;
+  z-index: 100;
+  padding: 24px;
+}
+.modal {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  width: 100%; max-width: 520px;
+  max-height: 90vh; overflow: auto;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+.modal h2 { margin: 0 0 16px; font-size: 18px; font-weight: 600; }
+.modal-form { display: flex; flex-direction: column; gap: 12px; }
+.modal-form label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.modal-form input, .modal-form select {
+  padding: 10px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  font: 14px var(--font-body);
+  color: var(--fg);
+  background: white;
+  text-transform: none; letter-spacing: 0;
+}
+.modal-form input:focus, .modal-form select:focus { outline: 2px solid var(--brand-green); border-color: var(--brand-green); }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+
+.empty {
+  padding: 40px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--bg);
+  color: var(--muted);
+}
+.tag-ADMIN         { background: #DDE7E9; color: #2D4F56; }
+.tag-COO           { background: #E6EFD9; color: #4F7A35; }
+.tag-STORE_MANAGER { background: #FBEFD6; color: #87580B; }
+.tag-SUPERVISOR    { background: #F8E2B6; color: #87580B; }
+
+.row-headline td:first-child::before {
+  content: '●';
+  color: var(--brand-green);
+  margin-right: 8px;
+}
+
+.alert-row { cursor: pointer; }
+
+.toolbar-input {
+  padding: 8px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  font: inherit;
+  background: white;
+  min-width: 200px;
+}
+.toolbar-input:focus { outline: 2px solid var(--brand-green); border-color: var(--brand-green); }
