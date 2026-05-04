@@ -18,7 +18,7 @@ import { aiRouter } from './routes/ai.js';
 import { errorHandler } from './middleware/error.js';
 import { setupWebSocket } from './ws.js';
 import { startScanner } from './scanner.js';
-import { seedIfEmpty } from './initData.js';
+import { seedIfEmpty, ensureDemoPasswords } from './initData.js';
 
 const PORT = Number(process.env.PORT) || 4321;
 const HOST = process.env.HOST || '0.0.0.0';
@@ -52,6 +52,7 @@ server.listen(PORT, HOST, async () => {
   console.log(`Listening on port ${PORT}`); // Railway port-detector pattern
   console.log(`[zero-quebra] node ${process.version} · env ${process.env.NODE_ENV || 'development'}`);
   await seedIfEmpty(prisma);
+  await ensureDemoPasswords(prisma);
   startScanner();
 });
 

@@ -9,6 +9,19 @@
 import bcrypt from 'bcryptjs';
 import type { PrismaClient, Role } from '@prisma/client';
 
+// Centralised demo password. Change here, redeploy, every demo account on
+// every connected DB picks it up via ensureDemoPasswords() on next boot.
+export const DEMO_PASSWORD = 'zero1234';
+
+const DEMO_EMAILS = [
+  'admin@zeroquebra.dev',
+  'coo@zeroquebra.dev',
+  'manager.l07@zeroquebra.dev',
+  'manager.l14@zeroquebra.dev',
+  'sup.l07@zeroquebra.dev',
+  'sup.l14@zeroquebra.dev',
+];
+
 let s = 42;
 const rand = () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; };
 const between = (lo: number, hi: number) => lo + rand() * (hi - lo);
@@ -140,8 +153,8 @@ export async function seedDatabase(prisma: PrismaClient): Promise<void> {
     });
   }
 
-  // 6 demo accounts — all use password 'demo1234'
-  const password = await bcrypt.hash('demo1234', 10);
+  // 6 demo accounts — all use password 'zero1234'
+  const password = await bcrypt.hash(DEMO_PASSWORD, 10);
   const users: { email: string; name: string; role: Role; storeId: string | null }[] = [
     { email: 'admin@zeroquebra.dev',       name: 'Ana Admin',         role: 'ADMIN',         storeId: null },
     { email: 'coo@zeroquebra.dev',         name: 'Carlos COO',        role: 'COO',           storeId: null },
@@ -171,5 +184,24 @@ export async function seedIfEmpty(prisma: PrismaClient): Promise<void> {
     // Don't crash the server if seeding fails — log so the operator can fix it,
     // and let the API come up so they can at least hit /api/health.
     console.error('[initData] seed-on-empty failed:', err);
+  }
+}
+
+// Sync the demo accounts' password to whatever DEMO_PASSWORD is currently set
+// to in source. Runs on every boot so changing the password in code + redeploy
+// is enough to update an already-seeded DB without wiping it. Only touches the
+// 6 known demo emails — leaves any user-created accounts alone.
+export async function ensureDemoPasswords(prisma: PrismaClient): Promise<void> {
+  try {
+    const hash = await bcrypt.hash(DEMO_PASSWORD, 10);
+    const updated = await prisma.user.updateMany({
+      where: { email: { in: DEMO_EMAILS } },
+      data:  { passwordHash: hash },
+    });
+    if (updated.count > 0) {
+      console.log(`[initData] synced demo password on ${updated.count} accounts`);
+    }
+  } catch (err) {
+    console.error('[initData] ensureDemoPasswords failed:', err);
   }
 }
