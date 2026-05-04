@@ -6,7 +6,9 @@ import en from '../locales/en.json';
 const LANG_KEY = 'zq:lang';
 
 const stored = (typeof window !== 'undefined' ? localStorage.getItem(LANG_KEY) : null);
-const initial = stored === 'en' || stored === 'pt-BR' ? stored : 'pt-BR';
+// Default to English; user can switch to PT-BR via the language toggle and the
+// choice persists in localStorage.
+const initial = stored === 'en' || stored === 'pt-BR' ? stored : 'en';
 
 i18n.use(initReactI18next).init({
   resources: {
