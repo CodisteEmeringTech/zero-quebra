@@ -44,7 +44,7 @@ Open http://localhost:5173
 
 ## Demo accounts
 
-All accounts use password **`demo1234`**.
+All accounts use password **`zero1234`**.
 
 | Email | Role | Scope |
 |---|---|---|
@@ -222,4 +222,4 @@ The repository ships in two flavours so each service can be deployed independent
 - [ ] First seed run: `npx tsx prisma/seed.ts` from backend's Railway shell
 - [ ] `VITE_API_BASE_URL` on frontend points at backend's public URL
 - [ ] Frontend build succeeded and `serve` is up
-- [ ] Open the frontend URL and log in as `admin@zeroquebra.dev` / `demo1234`
+- [ ] Open the frontend URL and log in as `admin@zeroquebra.dev` / `zero1234`

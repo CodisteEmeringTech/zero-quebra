@@ -164,7 +164,7 @@ async function main() {
   }
 
   console.log('seed: demo users');
-  const password = await bcrypt.hash('demo1234', 10);
+  const password = await bcrypt.hash('zero1234', 10);
   const users = [
     { email: 'admin@zeroquebra.dev',     name: 'Ana Admin',          role: 'ADMIN'         as Role, storeId: null },
     { email: 'coo@zeroquebra.dev',       name: 'Carlos COO',         role: 'COO'           as Role, storeId: null },
@@ -188,7 +188,7 @@ async function main() {
   console.log('    · Pre-AI shrinkage baseline 6.03% → trending to 4.60% over 30 days');
   console.log('    · Learning loop: Week 1 71% → Week 8 94%');
   console.log('    · Admin can add more stores / SKUs / inventory via UI during the demo');
-  console.log('  Demo accounts (password: demo1234):');
+  console.log('  Demo accounts (password: zero1234):');
   for (const u of users) console.log(`    · ${u.email}  (${u.role}${u.storeId ? ', ' + STORES.find(s => stores[s.code] === u.storeId)?.name : ''})`);
 }
 
