@@ -21,7 +21,7 @@ export function LoginPage() {
   const nav = useNavigate();
   const setUser = useAuthStore(s => s.setUser);
   const [email, setEmail] = useState('admin@zeroquebra.dev');
-  const [password, setPassword] = useState('demo1234');
+  const [password, setPassword] = useState('zero1234');
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -67,14 +67,14 @@ export function LoginPage() {
               <button
                 key={d.email}
                 type="button"
-                onClick={() => { setEmail(d.email); setPassword('demo1234'); }}
+                onClick={() => { setEmail(d.email); setPassword('zero1234'); }}
               >
                 <strong>{d.label}</strong>
                 <em>{t(`roles.${d.role}`)}</em>
               </button>
             ))}
           </div>
-          <p className="login-demo-hint">{t('login.demo_password_hint')} <code>demo1234</code></p>
+          <p className="login-demo-hint">{t('login.demo_password_hint')} <code>zero1234</code></p>
         </div>
       </div>
     </div>
