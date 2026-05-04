@@ -66,11 +66,36 @@ export async function api<T = unknown>(
 }
 
 export async function login(email: string, password: string) {
-  const r = await fetch(apiUrl('/auth/login'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
-  });
+  const url = apiUrl('/auth/login');
+  let r: Response;
+  try {
+    r = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+  } catch (e) {
+    // Network failure (DNS, CORS, offline backend, blocked by mixed-content, etc.)
+    throw new ApiError(0, `Network error reaching ${url} — ${(e as Error).message ?? 'fetch failed'}. Check VITE_API_BASE_URL on the frontend service points to a reachable backend.`, null);
+  }
+
+  // Distinguish "got JSON back" from "got HTML back" — the latter usually means
+  // the request hit the frontend's own static server (because VITE_API_BASE_URL
+  // wasn't set on the deploy) instead of the backend API.
+  const contentType = r.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const text = await r.text().catch(() => '');
+    const looksLikeHtml = text.trim().toLowerCase().startsWith('<!doctype') || text.trim().startsWith('<html');
+    if (looksLikeHtml) {
+      throw new ApiError(
+        r.status,
+        `Backend not reachable — request to ${url} returned HTML (status ${r.status}). The frontend is calling itself. Set VITE_API_BASE_URL on the frontend service to your backend's public URL and redeploy.`,
+        text.slice(0, 200),
+      );
+    }
+    throw new ApiError(r.status, `Unexpected response (${contentType || 'no content-type'}) from ${url}`, text.slice(0, 200));
+  }
+
   const body = await r.json().catch(() => null);
   if (!r.ok) {
     const msg = (body && typeof body === 'object' && 'error' in body)
