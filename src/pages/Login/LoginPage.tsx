@@ -74,7 +74,6 @@ export function LoginPage() {
               </button>
             ))}
           </div>
-          <p className="login-demo-hint">{t('login.demo_password_hint')} <code>zero1234</code></p>
         </div>
       </div>
     </div>

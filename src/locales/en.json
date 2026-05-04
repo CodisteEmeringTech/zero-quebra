@@ -71,7 +71,6 @@
     "submit": "Sign in",
     "submitting": "Signing in…",
     "demo_accounts": "Demo accounts",
-    "demo_password_hint": "Password for all demo accounts:",
     "error_invalid": "Invalid credentials",
     "error_generic": "Sign-in error"
   },
