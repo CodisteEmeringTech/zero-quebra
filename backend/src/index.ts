@@ -18,6 +18,7 @@ import { aiRouter } from './routes/ai.js';
 import { errorHandler } from './middleware/error.js';
 import { setupWebSocket } from './ws.js';
 import { startScanner } from './scanner.js';
+import { seedIfEmpty } from './initData.js';
 
 const PORT = Number(process.env.PORT) || 4321;
 const HOST = process.env.HOST || '0.0.0.0';
@@ -46,9 +47,11 @@ const server = http.createServer(app);
 const wss = new WebSocketServer({ server, path: '/ws' });
 setupWebSocket(wss);
 
-server.listen(PORT, HOST, () => {
+server.listen(PORT, HOST, async () => {
   console.log(`[zero-quebra] api+ws listening on http://${HOST}:${PORT}`);
+  console.log(`Listening on port ${PORT}`); // Railway port-detector pattern
   console.log(`[zero-quebra] node ${process.version} · env ${process.env.NODE_ENV || 'development'}`);
+  await seedIfEmpty(prisma);
   startScanner();
 });
 
