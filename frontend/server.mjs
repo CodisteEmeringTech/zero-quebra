@@ -67,6 +67,11 @@ const server = createServer(async (req, res) => {
   }
 });
 
+// Emit log lines in the patterns Railway's port auto-detector scans for.
+// Once Railway sees one of these, it auto-routes the public domain to PORT
+// without any manual "Target Port" or "Generate Domain" configuration.
 server.listen(PORT, HOST, () => {
-  console.log(`[zero-quebra-frontend] serving ${ROOT} on http://${HOST}:${PORT}`);
+  console.log(`Listening on port ${PORT}`);
+  console.log(`Server running at http://${HOST}:${PORT}`);
+  console.log(`[zero-quebra-frontend] serving ${ROOT}`);
 });
