@@ -85,7 +85,3 @@
   font-style: normal; font-size: 11px; color: var(--muted);
   letter-spacing: 0.04em; text-transform: uppercase;
 }
-.login-demo-hint { color: var(--muted); font-size: 12px; margin: 0; }
-.login-demo-hint code {
-  background: var(--bg); padding: 1px 6px; border-radius: 4px; font-size: 12px;
-}
