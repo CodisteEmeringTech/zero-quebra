@@ -4,13 +4,13 @@ import { PageHeader } from '../../components/PageHeader';
 import '../../components/page.css';
 import './calculator.css';
 
-// The brief explicitly forbids R$ absolute figures on this screen ("commercial terms,
-// pricing, and ROI figures are managed separately by Heinrich Co. and are not included here").
-// So we surface only operational metrics: % shrinkage reduction, target rate, units recovered,
-// and timeline.
+// Per the brief, this screen surfaces operational metrics only — no absolute
+// R$ figures. Commercial terms, pricing and ROI figures are managed elsewhere.
+// We render: % shrinkage reduction, target rate, units recovered, timeline.
 //
-// Demo scope: 3 seeded stores × 7 anchor SKUs. The brief positions production at 16 stores ×
-// 200 SKUs; admin can add more stores/SKUs through the UI during the demo if needed.
+// Demo scope: 3 seeded stores × 7 anchor SKUs. Production scope is 16 stores ×
+// 200 active FLV SKUs; admin can add more stores/SKUs through the UI during the
+// demo if needed.
 type Scenario = 'A' | 'B' | 'C';
 
 const BASELINE_PCT = 6.03;             // brief: pre-AI FLV baseline
