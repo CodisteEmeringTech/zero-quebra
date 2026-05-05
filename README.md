@@ -183,7 +183,7 @@ Click **"Reiniciar demo"** to reset the headline SKU back to safe state.
 
 ## Notes
 
-- White-label: no Codiste references anywhere in the running app or repo. Brand tokens are in `frontend/src/lib/brand.css`.
+- White-label: only the `zero quebra` brand appears in any user-facing surface or repo file. Brand tokens are in `frontend/src/lib/brand.css`.
 - Offline: scanner runs locally; no external API calls.
 - PT-BR: all team-facing UI is Portuguese. Operator/admin pages are bilingual where appropriate.
 
